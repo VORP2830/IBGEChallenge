@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IBGEChallenge.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231031155631_V_01_00")]
+    [Migration("20231031204153_V_01_00")]
     partial class V_01_00
     {
         /// <inheritdoc />
@@ -25,38 +25,6 @@ namespace IBGEChallenge.Infra.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("IBGEChallenge.Domain.Entities.City", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<long>("StateId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StateId");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("IBGEChallenge.Domain.Entities.Locality", b =>
                 {
                     b.Property<long>("Id")
@@ -67,9 +35,6 @@ namespace IBGEChallenge.Infra.Data.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("boolean");
-
-                    b.Property<long>("CityId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -82,9 +47,16 @@ namespace IBGEChallenge.Infra.Data.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("StateId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("StateId");
 
                     b.ToTable("Localities");
                 });
@@ -116,10 +88,10 @@ namespace IBGEChallenge.Infra.Data.Migrations
                     b.ToTable("States");
                 });
 
-            modelBuilder.Entity("IBGEChallenge.Domain.Entities.City", b =>
+            modelBuilder.Entity("IBGEChallenge.Domain.Entities.Locality", b =>
                 {
                     b.HasOne("IBGEChallenge.Domain.Entities.State", "State")
-                        .WithMany("Cities")
+                        .WithMany("Localities")
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -127,25 +99,9 @@ namespace IBGEChallenge.Infra.Data.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("IBGEChallenge.Domain.Entities.Locality", b =>
-                {
-                    b.HasOne("IBGEChallenge.Domain.Entities.City", "City")
-                        .WithMany("Localities")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
-            modelBuilder.Entity("IBGEChallenge.Domain.Entities.City", b =>
-                {
-                    b.Navigation("Localities");
-                });
-
             modelBuilder.Entity("IBGEChallenge.Domain.Entities.State", b =>
                 {
-                    b.Navigation("Cities");
+                    b.Navigation("Localities");
                 });
 #pragma warning restore 612, 618
         }

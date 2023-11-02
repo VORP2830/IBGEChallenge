@@ -29,36 +29,14 @@ namespace IBGEChallenge.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    StateId = table.Column<long>(type: "bigint", nullable: false),
-                    Active = table.Column<bool>(type: "boolean", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cities_States_StateId",
-                        column: x => x.StateId,
-                        principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Localities",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     IBGECode = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false),
-                    CityId = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    StateId = table.Column<long>(type: "bigint", nullable: false),
                     Active = table.Column<bool>(type: "boolean", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -67,22 +45,17 @@ namespace IBGEChallenge.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_Localities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Localities_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
+                        name: "FK_Localities_States_StateId",
+                        column: x => x.StateId,
+                        principalTable: "States",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_StateId",
-                table: "Cities",
-                column: "StateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Localities_CityId",
+                name: "IX_Localities_StateId",
                 table: "Localities",
-                column: "CityId");
+                column: "StateId");
         }
 
         /// <inheritdoc />
@@ -90,9 +63,6 @@ namespace IBGEChallenge.Infra.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Localities");
-
-            migrationBuilder.DropTable(
-                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "States");

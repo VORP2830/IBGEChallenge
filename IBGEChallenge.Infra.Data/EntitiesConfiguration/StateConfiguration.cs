@@ -14,7 +14,7 @@ namespace IBGEChallenge.Infra.Data.EntitiesConfiguration
                         .HasMaxLength(50)
                         .IsRequired();
 
-            builder.HasMany(s => s.Cities)
+            builder.HasMany(s => s.Localities)
                     .WithOne(c => c.State)
                     .HasForeignKey(c => c.StateId);
         }

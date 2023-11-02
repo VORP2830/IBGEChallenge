@@ -5,7 +5,7 @@ namespace IBGEChallenge.Domain.Entities
     public class State : BaseEntity
     {
         public string Name { get; protected set; }
-        public IEnumerable<City> Cities { get; protected set; }
+        public IEnumerable<Locality> Localities { get; protected set; }
         protected State(){ }
         public State(string name)
         {
