@@ -13,9 +13,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "John Doe";
             string email = "john.doe@example.com";
             string password = "SecurePassword123";
+            string userName = "john";
 
             // Act
-            var user = new User(name, email, password);
+            var user = new User(name, userName, email, password);
 
             // Assert
             Assert.Equal(name, user.Name);
@@ -30,9 +31,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "";
             string email = "jane@example.com";
             string password = "Secure123";
+            string userName = "john";
 
             // Act & Assert
-            var exception = Assert.Throws<IBGEException>(() => new User(name, email, password));
+            var exception = Assert.Throws<IBGEException>(() => new User(name, userName, email, password));
             Assert.Equal("Nome é obrigatório", exception.Message);
         }
 
@@ -43,9 +45,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "A";
             string email = "dave@example.com";
             string password = "Secret123";
+            string userName = "john";
 
             // Act & Assert
-            var exception = Assert.Throws<IBGEException>(() => new User(name, email, password));
+            var exception = Assert.Throws<IBGEException>(() => new User(name, userName, email, password));
             Assert.Equal("Nome deve conter mais de 3 caracteres", exception.Message);
         }
 
@@ -56,9 +59,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "Mary Johnson";
             string email = "";
             string password = "Password123";
+            string userName = "john";
 
             // Act & Assert
-            var exception = Assert.Throws<IBGEException>(() => new User(name, email, password));
+            var exception = Assert.Throws<IBGEException>(() => new User(name, userName, email, password));
             Assert.Equal("Email é obrigatório", exception.Message);
         }
 
@@ -69,9 +73,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "Rob Brown";
             string email = "invalid-email";
             string password = "Secure456";
+            string userName = "john";
 
             // Act & Assert
-            var exception = Assert.Throws<IBGEException>(() => new User(name, email, password));
+            var exception = Assert.Throws<IBGEException>(() => new User(name, userName, email, password));
             Assert.Equal("Email inválido", exception.Message);
         }
 
@@ -82,9 +87,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "Sarah Davis";
             string email = "sarah@example.com";
             string password = "";
+            string userName = "john";
 
             // Act & Assert
-            var exception = Assert.Throws<IBGEException>(() => new User(name, email, password));
+            var exception = Assert.Throws<IBGEException>(() => new User(name, userName, email, password));
             Assert.Equal("Senha é obrigatória", exception.Message);
         }
 
@@ -95,9 +101,10 @@ namespace IBGEChallenge.Domain.Test
             string name = "Michael Wilson";
             string email = "michael@example.com";
             string password = "Default123";
+            string userName = "john";
 
             // Act
-            var user = new User(name, email, password);
+            var user = new User(name, userName, email, password);
 
             // Assert
             Assert.True(user.Active);
